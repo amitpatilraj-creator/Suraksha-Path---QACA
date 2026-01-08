@@ -2,6 +2,7 @@
   "name": "Suraksha Path - QACA Safety Monitor",
   "description": "A safety assessment application for field staff in India, providing real-time risk analysis for travel and work commencement based on local conditions and safety protocols.",
   "requestFramePermissions": [
-    "geolocation"
+    "geolocation",
+    "camera"
   ]
 }

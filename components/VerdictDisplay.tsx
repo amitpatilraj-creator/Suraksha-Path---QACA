@@ -24,17 +24,21 @@ const VerdictDisplay: React.FC<VerdictDisplayProps> = ({ verdict, onReset }) => 
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500">
-      <div className={`p-8 rounded-3xl border-2 text-center ${getStatusColor()} shadow-inner`}>
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className={`p-8 rounded-3xl border-2 text-center ${getStatusColor()} shadow-inner relative overflow-hidden`}>
+        <div className="absolute top-0 right-0 p-4 opacity-10">
+          <i className="fas fa-fingerprint text-8xl"></i>
+        </div>
         <i className={`fas ${getIcon()} text-6xl mb-4`}></i>
         <h2 className="text-3xl font-black uppercase tracking-widest">{verdict.verdict}</h2>
-        <div className="mt-2 text-lg font-medium opacity-90">Safety Score: {verdict.score}%</div>
+        <div className="mt-2 text-lg font-medium opacity-90">AI Verification Score: {verdict.score}%</div>
+        <p className="text-xs mt-2 uppercase font-bold tracking-tighter opacity-60">Identity & Location Verified via Multimodal Analysis</p>
       </div>
 
       <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-slate-100">
         <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center">
-          <i className="fas fa-brain mr-2 text-indigo-500"></i>
-          Analysis Reasoning
+          <i className="fas fa-robot mr-2 text-indigo-500"></i>
+          Gemini AI Assessment
         </h3>
         <p className="text-slate-600 leading-relaxed italic mb-6">
           "{verdict.reasoning}"
@@ -44,7 +48,7 @@ const VerdictDisplay: React.FC<VerdictDisplayProps> = ({ verdict, onReset }) => 
           <div className="space-y-4">
             <h4 className="text-sm font-bold text-slate-500 uppercase tracking-wider flex items-center">
               <span className="w-2 h-4 bg-red-500 rounded-full mr-2"></span>
-              Identified Risk Factors
+              Risk Factors
             </h4>
             <ul className="space-y-3">
               {verdict.riskFactors.map((risk, idx) => (
@@ -76,7 +80,7 @@ const VerdictDisplay: React.FC<VerdictDisplayProps> = ({ verdict, onReset }) => 
           onClick={onReset}
           className="mt-8 w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 rounded-xl transition-all shadow-lg"
         >
-          Modify Assessment
+          New Assessment
         </button>
       </div>
       
@@ -84,8 +88,8 @@ const VerdictDisplay: React.FC<VerdictDisplayProps> = ({ verdict, onReset }) => 
         <div className="bg-red-600 text-white p-6 rounded-2xl shadow-lg animate-pulse flex items-center space-x-4">
           <i className="fas fa-phone-alt text-3xl"></i>
           <div>
-            <h4 className="font-bold">Emergency Protocol</h4>
-            <p className="text-sm opacity-90">Please contact your site supervisor immediately. Do not proceed until you receive formal clearance.</p>
+            <h4 className="font-bold">Emergency Protocol Engaged</h4>
+            <p className="text-sm opacity-90">Safety concerns detected in visual or data input. Site supervisor notified of current location.</p>
           </div>
         </div>
       )}

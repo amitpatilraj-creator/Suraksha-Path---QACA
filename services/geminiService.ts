@@ -5,9 +5,14 @@ import { SafetyChecklist, SafetyVerdict } from "../types";
 export const analyzeSafety = async (checklist: SafetyChecklist): Promise<SafetyVerdict> => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
   
-  const prompt = `
+  const textPrompt = `
     Analyze the following travel safety checklist for a field staff member in India.
-    Consider Indian road conditions (potholes, traffic density, local risks), weather, and specific hazards.
+    Consider Indian road conditions, weather, and specific hazards.
+    
+    Staff Details:
+    - Name: ${checklist.staffName}
+    - Phone: ${checklist.staffPhone}
+    - Location: ${checklist.location ? `${checklist.location.latitude}, ${checklist.location.longitude}` : 'Not provided'}
     
     Checklist Data:
     - Mode: ${checklist.mode}
@@ -15,26 +20,40 @@ export const analyzeSafety = async (checklist: SafetyChecklist): Promise<SafetyV
     - Time: ${checklist.time}
     - Valid License: ${checklist.hasValidLicense ? 'Yes' : 'No'}
     - Wearing PPE: ${checklist.isWearingPPE ? 'Yes' : 'No'}
-    - PPE Used: ${checklist.ppeDetails.join(', ')}
+    - PPE Declared: ${checklist.ppeDetails.join(', ')}
     - Vehicle Check Done: ${checklist.performedVehicleCheck ? 'Yes' : 'No'}
     - Weather: ${checklist.weatherCondition}
     - Staff Fatigue: ${checklist.isFatigued ? 'Yes' : 'No'}
 
+    The provided image is a selfie of the staff member. Verify if they appear to be wearing the declared PPE (like a helmet or reflective vest) if visible.
+    
     Criteria for "UNSAFE":
     - Night driving (9 PM - 4 AM) on Two Wheeler in India is extremely high risk.
     - Missing valid license.
+    - Missing critical PPE based on the image and declaration.
     - Long distance (>50km) on bike at night.
     - Heavy rain/Monsoon conditions for two-wheelers.
-    - Lack of mandatory PPE (Helmet for bikes, Seatbelts for cars).
-    - No pre-vehicle check.
+    - Staff reporting fatigue.
 
     Response must be in JSON.
   `;
 
+  const parts: any[] = [{ text: textPrompt }];
+  
+  if (checklist.selfie) {
+    const base64Data = checklist.selfie.split(',')[1];
+    parts.push({
+      inlineData: {
+        mimeType: 'image/jpeg',
+        data: base64Data,
+      },
+    });
+  }
+
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: prompt,
+      contents: { parts },
       config: {
         responseMimeType: "application/json",
         responseSchema: {

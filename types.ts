@@ -15,7 +15,16 @@ export enum TimeOfDay {
   LATE_NIGHT = 'Late Night (12 AM - 4 AM)'
 }
 
+export interface StaffLocation {
+  latitude: number;
+  longitude: number;
+}
+
 export interface SafetyChecklist {
+  staffName: string;
+  staffPhone: string;
+  selfie?: string; // base64
+  location?: StaffLocation;
   mode: TravelMode;
   distance: number;
   time: TimeOfDay;
