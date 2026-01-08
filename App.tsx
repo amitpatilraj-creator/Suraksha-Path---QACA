@@ -36,19 +36,23 @@ const App: React.FC = () => {
       <Header />
       
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="mb-8 text-center">
-          <h2 className="text-3xl font-bold text-slate-800 md:text-4xl mb-2">
-            Field Safety Protocol
+        <div className="mb-10 text-center">
+          <div className="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 text-[10px] font-bold uppercase tracking-widest rounded-full mb-4">
+            Compliance Module v3.1
+          </div>
+          <h2 className="text-3xl font-black text-slate-900 md:text-4xl mb-3 tracking-tight">
+            Safety Clearance Protocol
           </h2>
-          <p className="text-slate-600 max-w-xl mx-auto">
-            Mandatory daily safety assessment for field engineers operating across India.
+          <p className="text-slate-500 max-w-xl mx-auto text-sm leading-relaxed">
+            Mandatory digital verification for all Quality Austria Central Asia field personnel. 
+            All parameters must be validated before transit.
           </p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-100 border-l-4 border-red-500 text-red-700 flex items-center">
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 flex items-center rounded-xl shadow-sm">
             <i className="fas fa-exclamation-circle mr-3"></i>
-            {error}
+            <span className="text-sm font-medium">{error}</span>
           </div>
         )}
 
@@ -59,22 +63,22 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-3 px-4 md:hidden flex justify-around text-slate-500 text-xs">
+      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-3 px-4 md:hidden flex justify-around text-slate-400 text-xs">
         <div className="flex flex-col items-center">
           <i className="fas fa-home text-lg mb-1"></i>
-          <span>Home</span>
+          <span className="font-bold">Home</span>
         </div>
         <div className="flex flex-col items-center text-indigo-600">
-          <i className="fas fa-clipboard-check text-lg mb-1"></i>
-          <span>Checklist</span>
+          <i className="fas fa-shield-check text-lg mb-1"></i>
+          <span className="font-bold">Clearance</span>
         </div>
         <div className="flex flex-col items-center">
-          <i className="fas fa-history text-lg mb-1"></i>
-          <span>History</span>
+          <i className="fas fa-file-alt text-lg mb-1"></i>
+          <span className="font-bold">Reports</span>
         </div>
         <div className="flex flex-col items-center">
-          <i className="fas fa-user text-lg mb-1"></i>
-          <span>Profile</span>
+          <i className="fas fa-user-circle text-lg mb-1"></i>
+          <span className="font-bold">Account</span>
         </div>
       </footer>
     </div>
